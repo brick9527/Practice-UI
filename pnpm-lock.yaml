@@ -44,6 +44,7 @@ specifiers:
   jest-watch-typeahead: 0.6.1
   less: ^4.1.1
   less-loader: 7.x
+  lodash: ^4.17.21
   mini-css-extract-plugin: 0.11.3
   optimize-css-assets-webpack-plugin: 5.0.4
   pnp-webpack-plugin: 1.6.4
@@ -117,6 +118,7 @@ dependencies:
   jest-circus: registry.nlark.com/jest-circus/26.6.0
   jest-resolve: registry.nlark.com/jest-resolve/26.6.0
   jest-watch-typeahead: registry.nlark.com/jest-watch-typeahead/0.6.1_jest@26.6.0
+  lodash: 4.17.21
   mini-css-extract-plugin: registry.nlark.com/mini-css-extract-plugin/0.11.3_webpack@4.44.2
   optimize-css-assets-webpack-plugin: registry.nlark.com/optimize-css-assets-webpack-plugin/5.0.4_webpack@4.44.2
   pnp-webpack-plugin: registry.nlark.com/pnp-webpack-plugin/1.6.4

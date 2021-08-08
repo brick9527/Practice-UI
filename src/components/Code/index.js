@@ -2,6 +2,7 @@ import { UnControlled as CodeMirror } from 'react-codemirror2';
 import { Button, Layout } from 'antd';
 import { CaretRightOutlined, CloseCircleOutlined, CopyOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 
 import { runCode } from '../../APIs/Code';
 
@@ -12,31 +13,34 @@ require('codemirror/mode/javascript/javascript');
 const { Header, Content } = Layout;
 
 function Code(props) {
-  const DEFAULT_CODE = `console.log('hello world')`;
-
   const runHandler = () => {
     const data = {
       code: props.code,
     };
     runCode(data).then(res => {
       console.log(res);
+      props.setCodeResult(_.get(res, 'data', ''));
     })
   };
 
-  const changeCodeHandler = (editor, data, value) => {
-    props.setCode(value);
+  const emptyCodeHandler = () => {
+    props.emptyCode();
+  };
+
+  const saveCode = () => {
+    console.log('save');
   };
 
   return (
     <>
       <Header className="code-header">
-        <Button icon={<CloseCircleOutlined />}>清空</Button>
-        <Button icon={<CopyOutlined />}>保存</Button>
+        <Button icon={<CloseCircleOutlined />} onClick={emptyCodeHandler}>清空</Button>
+        <Button icon={<CopyOutlined />} onClick={saveCode}>保存</Button>
         <Button type="primary" icon={<CaretRightOutlined />} onClick={runHandler}>运行</Button>
       </Header>
       <Content>
         <CodeMirror
-          value={DEFAULT_CODE}
+          value={props.code}
           options={{
             mode: 'javascript',
             theme: 'material',
@@ -44,7 +48,6 @@ function Code(props) {
             tabSize: 2,
             // autofocus: true,
           }}
-          onChange={changeCodeHandler}
         />
       </Content>
     </>
@@ -63,6 +66,9 @@ const mapDispatchToProps = (dispatch) => {
     emptyCode: () => {
       dispatch({ type: 'emptyCode' });
     },
+    setCodeResult: (result) => {
+      dispatch({ type: 'setCodeResult', codeResult: result });
+    }
   };
 };
 
