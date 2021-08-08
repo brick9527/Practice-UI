@@ -12,6 +12,7 @@ require('codemirror/mode/javascript/javascript');
 const { Header, Content } = Layout;
 
 function Code(props) {
+  const DEFAULT_CODE = `console.log('hello world')`;
 
   const runHandler = () => {
     const data = {
@@ -35,13 +36,13 @@ function Code(props) {
       </Header>
       <Content>
         <CodeMirror
-          value={props.code}
+          value={DEFAULT_CODE}
           options={{
             mode: 'javascript',
             theme: 'material',
             lineNumbers: true,
             tabSize: 2,
-            autofocus: true,
+            // autofocus: true,
           }}
           onChange={changeCodeHandler}
         />
