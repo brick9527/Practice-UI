@@ -12,6 +12,8 @@ const reducer = (state = initState, action) => {
     case 'setCodeResult':
       console.log('reducer = ', action)
       return Object.assign({}, state, { codeResult: action.codeResult });
+    case 'emptyCodeResult':
+      return Object.assign({}, state, { codeResult: '' });
     default:
       return state;
   }

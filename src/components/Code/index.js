@@ -13,12 +13,17 @@ require('codemirror/mode/javascript/javascript');
 const { Header, Content } = Layout;
 
 function Code(props) {
+  const state = {
+    code: props.code,
+  };
+
   const runHandler = () => {
     const data = {
-      code: props.code,
+      code: state.code,
     };
     runCode(data).then(res => {
       console.log(res);
+      props.setCode(state.code);
       props.setCodeResult(_.get(res, 'data', ''));
     })
   };
@@ -31,6 +36,10 @@ function Code(props) {
     console.log('save');
   };
 
+  const changeHandler = (editor, data, value) => {
+    state.code = value;
+  };
+
   return (
     <>
       <Header className="code-header">
@@ -40,7 +49,7 @@ function Code(props) {
       </Header>
       <Content>
         <CodeMirror
-          value={props.code}
+          value={state.code}
           options={{
             mode: 'javascript',
             theme: 'material',
@@ -48,6 +57,7 @@ function Code(props) {
             tabSize: 2,
             // autofocus: true,
           }}
+          onChange={changeHandler}
         />
       </Content>
     </>
@@ -68,6 +78,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     setCodeResult: (result) => {
       dispatch({ type: 'setCodeResult', codeResult: result });
+    },
+    emptyCodeResult: () => {
+      dispatch({ type: 'emptyCodeResult' });
     }
   };
 };
