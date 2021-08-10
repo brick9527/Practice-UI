@@ -8,7 +8,7 @@ const { Header, Content } = Layout;
 
 function CodeResult(props) {
   return (
-    <div>
+    <div className="code-result-container">
       <Header className="code-result-header">运行结果:</Header>
       <Content>
         <CodeMirror

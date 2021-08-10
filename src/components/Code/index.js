@@ -41,7 +41,7 @@ function Code(props) {
   };
 
   return (
-    <>
+    <div className="code-container">
       <Header className="code-header">
         <Button icon={<CloseCircleOutlined />} onClick={emptyCodeHandler}>清空</Button>
         <Button icon={<CopyOutlined />} onClick={saveCode}>保存</Button>
@@ -60,7 +60,7 @@ function Code(props) {
           onChange={changeHandler}
         />
       </Content>
-    </>
+    </div>
   );
 }
 
