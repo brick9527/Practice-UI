@@ -7,14 +7,20 @@ import './index.less';
 
 function Main() {
   return (
-    <Row className="app-wrapper">
-        <Col className="left-container" span={12}>
-          <Code />
-        </Col>
-        <Col className="right-container" span={12}>
-          <CodeResult />
-        </Col>
-    </Row>
+    <>
+      <Row>
+          <Col className="code-container" xs={24} lg={12}>
+            <Code />
+          </Col>
+          <Col xs={24} lg={12}>
+            <CodeResult />
+          </Col>
+      </Row>
+      <Row className="website-info-container"justify="space-around">
+        <Col span={24}>蜀ICP备19007248号-2</Col>
+        <Col span={24}>蜀ICP备19007248号-2</Col>
+      </Row>
+    </>
   );
 }
 
