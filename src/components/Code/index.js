@@ -1,8 +1,10 @@
+import React, { useState } from 'react';
 import { UnControlled as CodeMirror } from 'react-codemirror2';
 import { Button, Layout } from 'antd';
 import { CaretRightOutlined, CloseCircleOutlined, CopyOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
 import _ from 'lodash';
+import PropTypes from 'prop-types';
 
 import { runCode } from '../../APIs/Code';
 
@@ -12,20 +14,19 @@ require('codemirror/mode/javascript/javascript');
 
 const { Header, Content } = Layout;
 
-function Code(props) {
-  const state = {
-    code: props.code,
-  };
+function Code (props) {
+  const [code, setCode] = useState(props.code);
+  // const state = {
+  //   code: props.code
+  // };
 
   const runHandler = () => {
-    const data = {
-      code: state.code,
-    };
+    const data = { code };
     runCode(data).then(res => {
       console.log(res);
-      props.setCode(state.code);
+      props.setCode(code);
       props.setCodeResult(_.get(res, 'data', ''));
-    })
+    });
   };
 
   const emptyCodeHandler = () => {
@@ -37,7 +38,7 @@ function Code(props) {
   };
 
   const changeHandler = (editor, data, value) => {
-    state.code = value;
+    setCode(value);
   };
 
   return (
@@ -49,12 +50,12 @@ function Code(props) {
       </Header>
       <Content>
         <CodeMirror
-          value={state.code}
+          value={code}
           options={{
             mode: 'javascript',
             theme: 'material',
             lineNumbers: true,
-            tabSize: 2,
+            tabSize: 2
             // autofocus: true,
           }}
           onChange={changeHandler}
@@ -63,6 +64,14 @@ function Code(props) {
     </div>
   );
 }
+
+Code.propTypes = {
+  code: PropTypes.string,
+  setCode: PropTypes.func.isRequired,
+  setCodeResult: PropTypes.func.isRequired,
+  emptyCode: PropTypes.func.isRequired,
+  emptyCodeResult: PropTypes.func.isRequired,
+};
 
 const mapstateToProps = (state) => {
   return state;
