@@ -29,7 +29,7 @@ function Main (props) {
       </Row>
       <Row className="website-info-container" justify="space-around">
         <Col span={24}>蜀ICP备19007248号-2</Col>
-        <Col span={24}>{props.system.config.version}</Col>
+        <Col span={24}>版本: {props.system.config.version}</Col>
       </Row>
     </>
   );

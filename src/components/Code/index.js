@@ -15,16 +15,19 @@ require('codemirror/mode/javascript/javascript');
 const { Header, Content } = Layout;
 
 function Code (props) {
-  const [code, setCode] = useState(props.code);
-  // const state = {
-  //   code: props.code
-  // };
+  // const [code, setCode] = useState(props.code);
+  const [codeHeader] = useState(props.system.config.codeTemplateHeader || '');
+  const [codeLine] = useState(codeHeader.split('\n').length);
+
+  const state = {
+    code: props.code
+  };
 
   const runHandler = () => {
-    const data = { code };
+    const data = { code: state.code };
     runCode(data).then(res => {
       console.log(res);
-      props.setCode(code);
+      props.setCode(state.code);
       props.setCodeResult(_.get(res, 'data', ''));
     });
   };
@@ -38,7 +41,8 @@ function Code (props) {
   };
 
   const changeHandler = (editor, data, value) => {
-    setCode(value);
+    // setCode(value);
+    state.code = value;
   };
 
   return (
@@ -50,13 +54,23 @@ function Code (props) {
       </Header>
       <Content>
         <CodeMirror
-          value={code}
+          className="header-code"
+          value={props.system.config.codeTemplateHeader}
           options={{
             mode: 'javascript',
             theme: 'material',
             lineNumbers: true,
             tabSize: 2
-            // autofocus: true,
+          }}
+        />
+        <CodeMirror
+          value={state.code}
+          options={{
+            mode: 'javascript',
+            theme: 'material',
+            lineNumbers: true,
+            tabSize: 2,
+            firstLineNumber: codeLine + 1
           }}
           onChange={changeHandler}
         />
@@ -71,6 +85,7 @@ Code.propTypes = {
   setCodeResult: PropTypes.func.isRequired,
   emptyCode: PropTypes.func.isRequired,
   emptyCodeResult: PropTypes.func.isRequired,
+  system: PropTypes.object,
 };
 
 const mapstateToProps = (state) => {
